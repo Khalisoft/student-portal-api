@@ -1,16 +1,23 @@
 {
-  "name": "student-portal",
+  "name": "student-portal-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "mocha --exit"
+  "main": "server.js",
+  "directories": {
+    "test": "test"
   },
-  "devDependencies": {
-    "chai": "^4.0.1",
-    "chai-http": "^3.0.0",
-    "faker": "^3.1.0",
-    "mocha": "^4.0.1"
-  }
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasminTrotter/student-portal-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasminTrotter/student-portal-api/issues"
+  },
+  "homepage": "https://github.com/JasminTrotter/student-portal-api#readme"
 }
