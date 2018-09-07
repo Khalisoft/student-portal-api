@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/JasminTrotter/student-portal-api/issues"
   },
-  "homepage": "https://github.com/JasminTrotter/student-portal-api#readme"
+  "homepage": "https://github.com/JasminTrotter/student-portal-api#readme",
+  "dependencies": {
+    "mocha": "^5.2.0"
+  }
 }
