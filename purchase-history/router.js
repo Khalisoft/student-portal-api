@@ -1,21 +1,19 @@
 'use strict';
-require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
-const {PurchaseItem} = require('./models');
+const {PurchaseItems} = require('./models');
 
 const router = express.Router();
 
-const { router: authRouter, localStrategy, jwtStrategy } = require('../auth');
-
 const passport = require('passport');
-passport.use(localStrategy);
-passport.use(jwtStrategy);
+
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/', jwtAuth, (req, res) => {
-	PurchaseItem.create({
+	PurchaseItems.create({
 		id: req.body.id,
 		package: req.body.package,
 		purchaseDate: req.body.purchaseDate,
@@ -31,5 +29,17 @@ router.post('/', jwtAuth, (req, res) => {
 
 });
 
+router.get('/:userId', jwtAuth, (req, res) => {
+	PurchaseItems
+	.find({userId: req.params.userId})
+
+    .then( items => {
+      res.json(items.map(item => item.serialize()));
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'something went wrong' });
+    });
+});
 
 module.exports = {router};

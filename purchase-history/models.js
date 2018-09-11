@@ -24,6 +24,6 @@ PurchaseSchema.methods.serialize = function() {
 };
 
 
-const PurchaseItem = mongoose.model('PurchaseItem', PurchaseSchema);
+const PurchaseItems = mongoose.model('PurchaseItems', PurchaseSchema);
 
-module.exports = {PurchaseItem};
+module.exports = {PurchaseItems};
