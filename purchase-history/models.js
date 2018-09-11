@@ -8,12 +8,12 @@ mongoose.Promise = global.Promise;
 //and other additional settings (like if they're required, if they have default values, etc.):
 const PurchaseSchema = mongoose.Schema({
   package: {type: String},
-  purchaseDate: {type: Date},
+  purchaseDate: {type: String},
   userId: {type: String}
 });
 
-//This code gives each instance of our Restaurant model a serialize method, 
-//which lets us specify how restaurants are represented outside of our application via our API. 
+//This code gives each instance of our Purchase History model a serialize method, 
+//which lets us specify how purchases are represented outside of our application via our API. 
 //Things like passwords can be left out of the serialize method so they are inaccessble via our API.
 PurchaseSchema.methods.serialize = function() {
   return {

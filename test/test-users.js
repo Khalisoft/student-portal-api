@@ -49,9 +49,6 @@ describe('/api/user', function () {
             firstName,
             lastName
           })
-          // .then(() =>
-          //   expect.fail(null, null, 'Request should not succeed')
-          // )
           .catch(err => {
             if (err instanceof chai.AssertionError) {
               throw err;
