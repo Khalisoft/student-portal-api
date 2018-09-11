@@ -29,17 +29,17 @@ router.post('/', jwtAuth, (req, res) => {
 
 });
 
-router.get('/:userId', jwtAuth, (req, res) => {
-	PurchaseItems
-	.find({userId: req.params.userId})
+// router.get('/:userId', jwtAuth, (req, res) => {
+// 	PurchaseItems
+// 	.find({userId: req.params.userId})
 
-    .then( items => {
-      res.json(items.map(item => item.serialize()));
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: 'something went wrong' });
-    });
-});
+//     .then( items => {
+//       res.json(items.map(item => item.serialize()));
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({ error: 'something went wrong' });
+//     });
+// });
 
 module.exports = {router};
