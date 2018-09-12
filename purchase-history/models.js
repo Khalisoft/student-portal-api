@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 const PurchaseSchema = mongoose.Schema({
   package: {type: String},
   purchaseDate: {type: String},
-  userId: {type: String}
+  userId: {type: String},
 });
 
 //This code gives each instance of our Purchase History model a serialize method, 
@@ -17,13 +17,14 @@ const PurchaseSchema = mongoose.Schema({
 //Things like passwords can be left out of the serialize method so they are inaccessble via our API.
 PurchaseSchema.methods.serialize = function() {
   return {
-    package: this.package,
-    purchaseDate: this.purchaseDate,
-    userId: this.userId
+    id: this.id,
+    package: this.package || '',
+    purchaseDate: this.purchaseDate || '',
+    userId: this.userId || ''
   };
 };
 
 
-const PurchaseItems = mongoose.model('PurchaseItems', PurchaseSchema);
+const PurchaseItems = mongoose.model('PurchaseItem', PurchaseSchema);
 
 module.exports = {PurchaseItems};
