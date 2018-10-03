@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const stripe = require("stripe")("pk_test_5u4S86Ac7OpnSuMj107YWfpi");
 
 // Here we use destructuring assignment with renaming so the two variables
 // called router (from ./users and ./auth) have different names
@@ -28,6 +29,8 @@ const { PORT, DATABASE_URL } = require('./config');
 
 const cors = require('cors');
 const {CLIENT_ORIGIN} = require('./config');
+
+app.use(require("body-parser").text());
 
 app.use(
     cors({
@@ -58,6 +61,29 @@ app.get('/api/protected', jwtAuth, (req, res) => {
     data: 'rosebud'
   });
 });
+
+//LOGOUT endpoint for user logout
+app.post('/logout', (req, res) => {
+  res.clearCookie('id_token');
+  res.redirect('/');
+});
+
+//stripe charges get posted here
+app.post('/charge', async (req, res) => {
+  try {
+    let {status} = await stripe.charges.create({
+      amount: 2000,
+      currency: "usd",
+      description: "An example charge",
+      source: req.body
+    });
+
+    res.json({status});
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 
  // Referenced by both runServer and closeServer. closeServer
 // assumes runServer has run and set `server` to a server object
