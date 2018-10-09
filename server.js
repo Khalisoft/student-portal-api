@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
-const stripe = require("stripe")("pk_test_5u4S86Ac7OpnSuMj107YWfpi");
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 // Here we use destructuring assignment with renaming so the two variables
 // called router (from ./users and ./auth) have different names
@@ -51,9 +51,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
    res.json({ok: true});
  });
 
-app.use('*', (req, res) => {
-  return res.status(404).json({ message: 'Not Found' });
-});
+
 
 // A protected endpoint which needs a valid JWT to access it
 app.get('/api/protected', jwtAuth, (req, res) => {
@@ -69,7 +67,8 @@ app.post('/logout', (req, res) => {
 });
 
 //stripe charges get posted here
-app.post('/charge', async (req, res) => {
+app.post('/api/charge', async (req, res) => {
+  
   try {
     let {status} = await stripe.charges.create({
       amount: 2000,
@@ -79,8 +78,11 @@ app.post('/charge', async (req, res) => {
     });
 
     res.json({status});
-  } catch (err) {
+  } 
+
+  catch (err) {
     res.status(500).end();
+    console.log(err)
   }
 });
 
