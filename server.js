@@ -34,7 +34,7 @@ app.use(require("body-parser").text());
 
 app.use(
     cors({
-        origin: "https://student-portal-balletbody.herokuapp.com"
+        origin: CLIENT_ORIGIN
     })
 );
 
