@@ -34,7 +34,7 @@ app.use(require("body-parser").text());
 
 app.use(
     cors({
-        origin: CLIENT_ORIGIN
+        origin: "https://student-portal-balletbody.herokuapp.com"
     })
 );
 
@@ -68,7 +68,7 @@ app.post('/logout', (req, res) => {
 
 //stripe charges get posted here
 app.post('/api/charge', async (req, res) => {
-  
+
   try {
     let {status} = await stripe.charges.create({
       amount: 2000,
