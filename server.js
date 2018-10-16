@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
-const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+const stripe = require("stripe")("sk_test_mV42WjXHzUOsWnairY9H7tfC");
 
 // Here we use destructuring assignment with renaming so the two variables
 // called router (from ./users and ./auth) have different names
@@ -31,6 +31,7 @@ const cors = require('cors');
 const {CLIENT_ORIGIN} = require('./config');
 
 app.use(require("body-parser").text());
+app.use(require("body-parser").json());
 
 app.use(
     cors({
@@ -68,13 +69,13 @@ app.post('/logout', (req, res) => {
 
 //stripe charges get posted here
 app.post('/api/charge', async (req, res) => {
-
+  console.log(stripe.charges);
   try {
     let {status} = await stripe.charges.create({
-      amount: 2000,
+      amount: req.body.product,
       currency: "usd",
       description: "An example charge",
-      source: req.body
+      source: req.body.token
     });
 
     res.json({status});
