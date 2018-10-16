@@ -70,6 +70,7 @@ app.post('/logout', (req, res) => {
 //stripe charges get posted here
 app.post('/api/charge', async (req, res) => {
   console.log(stripe.charges);
+
   try {
     let {status} = await stripe.charges.create({
       amount: req.body.product,
@@ -86,6 +87,8 @@ app.post('/api/charge', async (req, res) => {
     console.log(err)
   }
 });
+
+
 
 
  // Referenced by both runServer and closeServer. closeServer
