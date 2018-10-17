@@ -75,7 +75,7 @@ app.post('/api/charge', async (req, res) => {
     let {status} = await stripe.charges.create({
       amount: req.body.product,
       currency: "usd",
-      description: "An example charge",
+      description: `${req.body.description} - Ballet Body by Jasmin`,
       source: req.body.token
     });
 
