@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 //need to pass this into the route handler
 const jsonParser = bodyParser.json();
 
-const {PurchaseItems} = require('./models');
+const {PurchaseHistory} = require('./models');
 
 const router = express.Router();
 
@@ -15,11 +15,13 @@ const passport = require('passport');
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/', jsonParser, jwtAuth, (req, res) => {
-	PurchaseItems.create({
+	PurchaseHistory.create({
 		id: req.body.id,
-		package: req.body.package,
-		purchaseDate: req.body.purchaseDate,
-		userId: req.body.userId
+		classes: req.body.classes,
+		date: req.body.date,
+		userId: req.body.userId,
+		stripeToken: req.body.stripeToken,
+		amount: req.body.amount
 	})
 	.then((post) => {
 	    res.json(post.serialize())
@@ -32,7 +34,7 @@ router.post('/', jsonParser, jwtAuth, (req, res) => {
 });
 
 router.get('/:userId', jwtAuth, (req, res) => {
-	PurchaseItems
+	PurchaseHistory
 	.find({userId: req.params.userId})
 
     .then( items => {
@@ -45,3 +47,4 @@ router.get('/:userId', jwtAuth, (req, res) => {
 });
 
 module.exports = {router};
+
