@@ -9,7 +9,8 @@ const purchaseHistorySchema = mongoose.Schema({
 	package: {type: String},
 	purchaseDate: {type: String},
 	amountPaid: {type: String},
-	userId: {type: String}
+	userId: {type: String},
+	id: {type: String}
 });
 
 
@@ -22,7 +23,8 @@ purchaseHistorySchema.methods.serialize = function() {
   package: this.package,
   purchaseDate: this.purchaseDate,
   amountPaid: this.amountPaid,
-  userId: this.userId
+  userId: this.userId,
+  id: this.id
   };
 };
 
