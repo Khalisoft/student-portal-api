@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 //We specify the properties the document has, along with their schema type, 
 //and other additional settings (like if they're required, if they have default values, etc.):
 const purchaseHistorySchema = mongoose.Schema({
-	classes: {type: String},
-	date: {type: String},
-	amount: {type: String},
-  stripeToken: {type: String},
-  userId: {type: String}
+	package: {type: String},
+	purchaseDate: {type: String},
+	amountPaid: {type: String},
+	userId: {type: String},
+	id: {type: String}
 });
 
 
@@ -20,11 +20,11 @@ const purchaseHistorySchema = mongoose.Schema({
 purchaseHistorySchema.methods.serialize = function() {
 
   return {
-  classes: this.classes,
-  date: this.date,
-  amount: this.amount,
-  stripeToken: this.stripeToken,
-  userId: this.userId
+  package: this.package,
+  purchaseDate: this.purchaseDate,
+  amountPaid: this.amountPaid,
+  userId: this.userId,
+  id: this.id
   };
 };
 

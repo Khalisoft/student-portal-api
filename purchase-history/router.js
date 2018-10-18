@@ -17,11 +17,10 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 router.post('/', jsonParser, jwtAuth, (req, res) => {
 	PurchaseHistory.create({
 		id: req.body.id,
-		classes: req.body.classes,
-		date: req.body.date,
+		package: req.body.package,
+		purchaseDate: req.body.purchaseDate,
 		userId: req.body.userId,
-		stripeToken: req.body.stripeToken,
-		amount: req.body.amount
+		amountPaid: req.body.amountPaid
 	})
 	.then((post) => {
 	    res.json(post.serialize())
