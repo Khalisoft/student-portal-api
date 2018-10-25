@@ -7,3 +7,4 @@ See the frontend code [here](https://github.com/JasminTrotter/student-portal-cli
 - Node.js + Express.js (web server)
 - MongoDB (database)
 - JSON Web Tokens (user authentication)
+- Stripe API (payment processing)
