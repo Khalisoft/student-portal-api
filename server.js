@@ -11,6 +11,7 @@ const app = express();
 const { PORT, DATABASE_URL } = require('./config');
 const cors = require('cors');
 const { CLIENT_ORIGIN } = require('./config');
+const { PurchaseHistory } = require('./purchase-history/models');
 
 mongoose.Promise = global.Promise;
 
@@ -30,10 +31,20 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/purchase-history/', historyRouter);
 
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
-app.get('/api/*', (req, res) => {
+app.get('/api/status', (req, res) => {
   res.json({ ok: true });
+});
+
+app.get('/api/transaction-history', (req, res) => {
+  PurchaseHistory
+    .find()
+    .then(items => {
+      res.json(items);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'something went wrong' });
+    });
 });
 
 app.post('/logout', (req, res) => {
