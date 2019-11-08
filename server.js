@@ -10,7 +10,7 @@ const { router: historyRouter } = require('./purchase-history');
 const app = express();
 const { PORT, DATABASE_URL } = require('./config');
 const cors = require('cors');
-const { CLIENT_ORIGIN } = require('./config');
+const { CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN } = require('./config');
 const { PurchaseHistory } = require('./purchase-history/models');
 
 mongoose.Promise = global.Promise;
@@ -18,9 +18,20 @@ mongoose.Promise = global.Promise;
 app.use(require("body-parser").text());
 app.use(require("body-parser").json());
 
+const whitelist = [CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+};
+
 app.use(
   cors({
-    origin: CLIENT_ORIGIN
+    origin: corsOptions
   })
 );
 
