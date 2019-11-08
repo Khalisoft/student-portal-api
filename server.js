@@ -10,16 +10,28 @@ const { router: historyRouter } = require('./purchase-history');
 const app = express();
 const { PORT, DATABASE_URL } = require('./config');
 const cors = require('cors');
-const { CLIENT_ORIGIN } = require('./config');
+const { CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN } = require('./config');
+const { PurchaseHistory } = require('./purchase-history/models');
 
 mongoose.Promise = global.Promise;
 
 app.use(require("body-parser").text());
 app.use(require("body-parser").json());
 
+const whitelist = [CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+};
+
 app.use(
   cors({
-    origin: CLIENT_ORIGIN
+    origin: corsOptions
   })
 );
 
@@ -30,10 +42,20 @@ app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/purchase-history/', historyRouter);
 
-const jwtAuth = passport.authenticate('jwt', { session: false });
-
-app.get('/api/*', (req, res) => {
+app.get('/api/status', (req, res) => {
   res.json({ ok: true });
+});
+
+app.get('/api/transaction-history', (req, res) => {
+  PurchaseHistory
+    .find()
+    .then(items => {
+      res.json(items);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'something went wrong' });
+    });
 });
 
 app.post('/logout', (req, res) => {
