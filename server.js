@@ -18,7 +18,7 @@ mongoose.Promise = global.Promise;
 app.use(require("body-parser").text());
 app.use(require("body-parser").json());
 
-const whitelist = [CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN];
+const whitelist = [CLIENT_ORIGIN, TRANSACTIONS_CLIENT_ORIGIN, 'http://localhost:3000'];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
