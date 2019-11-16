@@ -29,11 +29,7 @@ const corsOptions = {
   }
 };
 
-app.use(
-  cors({
-    origin: corsOptions
-  })
-);
+app.use(cors(corsOptions));
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
